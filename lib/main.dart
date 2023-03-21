@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
@@ -54,6 +55,9 @@ class MyApp extends StatelessWidget {
       }
       print(kartNo);
       NfcManager.instance.stopSession();
+
+      //var ndef = Ndef.from(tag);
+      //ndef.write(NdefMessage([NdefRecord.createMime("idrecord", Uint8List.fromList(List<int>.generate(6, (index) => null)))]);
     });
   }
 }
