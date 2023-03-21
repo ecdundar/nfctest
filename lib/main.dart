@@ -19,22 +19,29 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(title: const Text("NFC Test")),
         body: SafeArea(
-            child: FutureBuilder<bool>(
-          future: NfcManager.instance.isAvailable(),
-          builder: (context, snapshot) => SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                    onPressed: _readTag, child: const Text('Read Tag'))
-              ],
-            ),
-          ),
-        )),
+            child: Container(
+                padding: const EdgeInsets.all(20.0),
+                child: FutureBuilder<bool>(
+                  future: NfcManager.instance.isAvailable(),
+                  builder: (context, snapshot) => SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                            onPressed: _readTag, child: const Text('Read Tag'))
+                      ],
+                    ),
+                  ),
+                ))),
       ),
     );
   }
 
-  void _readTag() {}
+  void _readTag() {
+    NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
+      print(tag.toString());
+      NfcManager.instance.stopSession();
+    });
+  }
 }
