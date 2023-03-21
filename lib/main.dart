@@ -40,7 +40,11 @@ class MyApp extends StatelessWidget {
 
   void _readTag() {
     NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
-      print(tag.toString());
+      var list = tag.data.entries.first;
+      for (var item in list.value.entries.first.value) {
+        print(item);
+      }
+
       NfcManager.instance.stopSession();
     });
   }
