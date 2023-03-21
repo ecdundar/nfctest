@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -38,13 +38,21 @@ class MyApp extends StatelessWidget {
     );
   }
 
+  String kartNo = "";
   void _readTag() {
     NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
       var list = tag.data.entries.first;
+      kartNo = "";
+      var index = 0;
       for (var item in list.value.entries.first.value) {
-        print(item);
+        int sayi = item;
+        kartNo =
+            "$kartNo${(index == 0 ? "" : "-")}${sayi.toRadixString(16).padLeft(2, '0')}"
+                .trim()
+                .toUpperCase();
+        index++;
       }
-
+      print(kartNo);
       NfcManager.instance.stopSession();
     });
   }
